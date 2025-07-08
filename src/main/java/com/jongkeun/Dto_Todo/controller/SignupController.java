@@ -1,6 +1,6 @@
 package com.jongkeun.Dto_Todo.controller;
 
-import com.jongkeun.Dto_Todo.dto.SignupDTO;
+import com.jongkeun.Dto_Todo.dto.SignupDto;
 import com.jongkeun.Dto_Todo.model.User;
 import com.jongkeun.Dto_Todo.repository.UserRepository;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class SignupController {
 
     @GetMapping("/signup")
     public String showSignup(Model model){
-        model.addAttribute("signupDto", new SignupDTO());
+        model.addAttribute("signupDto", new SignupDto());
 
         return "signup";
     }
@@ -29,7 +29,7 @@ public class SignupController {
     @PostMapping("/signup")
     public String doSignup(
             // 검증절차. 서버로 넘길 때
-            @Valid @ModelAttribute("signupDto") SignupDTO signupDTO,
+            @Valid @ModelAttribute("signupDto") SignupDto signupDTO,
             // 검사 결과를 받아옴. 에러 포함
             BindingResult bindingResult,
             Model model
@@ -39,6 +39,8 @@ public class SignupController {
         }
 
         // 중복 가입 여부 체크. username 유니크 값이여서 이미 중복 가입 불가. 사용자에게 알려주기 위한 로직
+
+
         User user = User.builder()
                 .username(signupDTO.getUsername())
                 .password(signupDTO.getPassword())
