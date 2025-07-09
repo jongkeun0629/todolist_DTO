@@ -29,7 +29,7 @@ public class SignupController {
     @PostMapping("/signup")
     public String doSignup(
             // 검증절차. 서버로 넘길 때
-            @Valid @ModelAttribute("signupDto") SignupDto signupDTO,
+            @Valid @ModelAttribute("signupDto") SignupDto signupDto,
             // 검사 결과를 받아옴. 에러 포함
             BindingResult bindingResult,
             Model model
@@ -39,7 +39,7 @@ public class SignupController {
         }
 
         // 중복 가입 여부 체크. username 유니크 값이여서 이미 중복 가입 불가. 사용자에게 알려주기 위한 로직
-        if (userRepository.findByUsername(signupDTO.getUsername()) != null){
+        if (userRepository.findByUsername(signupDto.getUsername()) != null){
             model.addAttribute("error", "이미 사용 중인 아이디입니다.");
 
             return "signup";
@@ -47,8 +47,8 @@ public class SignupController {
 
 
         User user = User.builder()
-                .username(signupDTO.getUsername())
-                .password(signupDTO.getPassword())
+                .username(signupDto.getUsername())
+                .password(signupDto.getPassword())
                 .build();
         userRepository.save(user);
 
